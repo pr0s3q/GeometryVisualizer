@@ -12,4 +12,6 @@ public:
 private:
     const float m_arrowLineThickness { 0.02f };
     const float m_arrowTipThickness { 0.2f };
+    const float m_startPosition { 2.0f };
+    const float m_endPosition { 2.4f };
 };

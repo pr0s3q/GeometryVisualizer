@@ -1,6 +1,4 @@
-#include <iostream>
-
-#include "GeometryVisualizer.hpp"
+#include <GeometryVisualizer.hpp>
 
 int main()
 {

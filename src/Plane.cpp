@@ -1,6 +1,6 @@
 #include <Plane.hpp>
 
-Plane::Plane(const Axis axis, Vector3 coordinate, const float width, const float height)
+Plane::Plane(const Axis axis, const Vector3& coordinate, const float& width, const float& height)
     : m_axis(axis)
     , m_coordinate(coordinate)
     , m_width(width)
@@ -14,20 +14,20 @@ void Plane::Draw() const
     {
         case Axis::X:
         {
-            DrawCube(m_coordinate, 0.006f, m_height, m_width, s_yellow);
-            DrawCubeWires(m_coordinate, 0.006f, m_height, m_width, MAROON);
+            DrawCube(m_coordinate, m_thickness, m_height, m_width, m_planeColor);
+            DrawCubeWires(m_coordinate, m_thickness, m_height, m_width, m_borderColor);
             break;
         }
         case Axis::Y:
         {
-            DrawCube(m_coordinate, m_width, m_height, 0.006f, s_yellow);
-            DrawCubeWires(m_coordinate, m_width, m_height, 0.006f, MAROON);
+            DrawCube(m_coordinate, m_width, m_height, m_thickness, m_planeColor);
+            DrawCubeWires(m_coordinate, m_width, m_height, m_thickness, m_borderColor);
             break;
         }
         case Axis::Z:
         {
-            DrawCube(m_coordinate, m_height, 0.006f, m_width, s_yellow);
-            DrawCubeWires(m_coordinate, m_height, 0.006f, m_width, MAROON);
+            DrawCube(m_coordinate, m_height, m_thickness, m_width, m_planeColor);
+            DrawCubeWires(m_coordinate, m_height, m_thickness, m_width, m_borderColor);
             break;
         }
         default:
