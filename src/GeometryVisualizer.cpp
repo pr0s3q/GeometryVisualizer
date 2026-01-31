@@ -24,15 +24,11 @@ void GeometryVisualizer::Launch()
 {
     while (!WindowShouldClose())
     {
-        // Update
-        //--------------------------------------------------------------------------------------
         UpdateCamera(&m_camera, CAMERA_FREE);
 
         if (IsKeyPressed(KEY_Z))
             m_camera.target = (Vector3){ 0.0f, 0.0f, 0.0f };
 
-        // Draw
-        //--------------------------------------------------------------------------------------
         BeginDrawing();
 
         ClearBackground(DARKGRAY);
@@ -45,7 +41,6 @@ void GeometryVisualizer::Launch()
 
         EndMode3D();
 
-        // Cursor
         m_cursor.Draw();
 
         DrawFPS(10, 10);

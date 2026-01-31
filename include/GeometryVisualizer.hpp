@@ -1,10 +1,9 @@
 #pragma once
 
-#include <raylib.h>
-
 #include <Cursor.hpp>
+#include <GridCoordinateArrows.hpp>
 
-#include "GridCoordinateArrows.hpp"
+#include <raylib.h>
 
 class GeometryVisualizer
 {
