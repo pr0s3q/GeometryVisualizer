@@ -1,11 +1,13 @@
 #pragma once
 
-class Cursor
+#include <IDrawable.hpp>
+
+class Cursor : IDrawable
 {
 public:
     Cursor() = default;
 
-    void Draw() const;
+    void Draw() const override;
 
 private:
     const float cursorXPos { 3600.0f / 2.0f };

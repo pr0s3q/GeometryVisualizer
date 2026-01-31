@@ -1,11 +1,13 @@
 #pragma once
 
-class GridCoordinateArrows
+#include <IDrawable.hpp>
+
+class GridCoordinateArrows : IDrawable
 {
 public:
     GridCoordinateArrows() = default;
 
-    void Draw() const;
+    void Draw() const override;
 
 private:
     const float m_arrowLineThickness { 0.02f };
