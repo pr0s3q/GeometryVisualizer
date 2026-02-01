@@ -1,11 +1,13 @@
+#include <AppSettings.hpp>
 #include <GeometryVisualizer.hpp>
 
 #include <raylib.h>
 
 GeometryVisualizer::GeometryVisualizer()
 {
-    constexpr int screenWidth = 3600;
-    constexpr int screenHeight = 1900;
+    int screenWidth;
+    int screenHeight;
+    AppSettings::GetResolution(screenWidth, screenHeight);
 
     InitWindow(screenWidth, screenHeight, "GeometryVisualizer");
 
