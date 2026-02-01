@@ -30,6 +30,7 @@ void GeometryVisualizer::Launch()
         UpdateCamera(&m_camera, m_cameraMode);
 
         HandleKeyInput();
+        m_toolbar.HandlePressedButtons();
 
         BeginDrawing();
         ClearBackground(DARKGRAY);
