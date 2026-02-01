@@ -56,6 +56,7 @@ target_include_directories(GeometryVisualizer PRIVATE
         .
         /home/cristopher/git/C/raylib/src
         /home/cristopher/git/C/raylib/src/external
+        /home/cristopher/git/C/raylib/examples/core
         /usr/local/include
 )
 

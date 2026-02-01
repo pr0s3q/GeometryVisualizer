@@ -1,5 +1,6 @@
 #include <AppSettings.hpp>
 #include <GeometryVisualizer.hpp>
+#include <Toolbar.hpp>
 
 #include <raylib.h>
 
@@ -26,17 +27,13 @@ void GeometryVisualizer::Launch()
 {
     while (!WindowShouldClose())
     {
-        UpdateCamera(&m_camera, CAMERA_FREE);
+        UpdateCamera(&m_camera, m_cameraMode);
 
-        if (IsKeyPressed(KEY_Z))
-            m_camera.target = (Vector3){ 0.0f, 0.0f, 0.0f };
+        HandleKeyInput();
 
         BeginDrawing();
-
         ClearBackground(DARKGRAY);
-
         BeginMode3D(m_camera);
-
         DrawGrid(50, 1.0f);
 
         m_gridCoordinateArrows.Draw();
@@ -44,10 +41,30 @@ void GeometryVisualizer::Launch()
         EndMode3D();
 
         m_cursor.Draw();
+        m_toolbar.Draw();
 
-        DrawFPS(10, 10);
+        DrawFPS(3400, 10);
 
         EndDrawing();
     }
     CloseWindow();
+}
+
+void GeometryVisualizer::HandleKeyInput()
+{
+    if (IsKeyPressed(KEY_Z))
+        m_camera.target = (Vector3){ 0.0f, 0.0f, 0.0f };
+    if (IsKeyPressed(KEY_M))
+    {
+        if (m_cameraMode == CAMERA_CUSTOM)
+        {
+            m_cameraMode = CAMERA_FREE;
+            DisableCursor();
+        }
+        else
+        {
+            m_cameraMode = CAMERA_CUSTOM;
+            EnableCursor();
+        }
+    }
 }
