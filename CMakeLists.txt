@@ -3,17 +3,11 @@ project(GeometryVisualizer LANGUAGES CXX)
 
 set(CMAKE_CXX_SCAN_FOR_MODULES OFF)
 
-# Use clang++
-set(CMAKE_CXX_COMPILER clang++)
-
-# C++ standard (adjust if needed)
+# C++ standard
 set(CMAKE_CXX_STANDARD 26)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Output directory
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY
-        ${CMAKE_BINARY_DIR}/bin/Release/GeometryVisualizer
-)
+add_subdirectory(3rd-party/raylib)
 
 # Collect sources under src/
 # CONFIGURE_DEPENDS makes CMake re-run configure when files are added/removed.
@@ -35,7 +29,6 @@ add_executable(GeometryVisualizer
 # Optimization & CPU flags
 target_compile_options(GeometryVisualizer PRIVATE
         -O3
-        -O2
         -march=native
         -mavx2
         -Wall
@@ -43,38 +36,20 @@ target_compile_options(GeometryVisualizer PRIVATE
         -Wno-unused-result
 )
 
-# Preprocessor definitions
-target_compile_definitions(GeometryVisualizer PRIVATE
-        _DEFAULT_SOURCE
-        PLATFORM_DESKTOP
-        PLATFORM_DESKTOP_GLFW
-)
-
-# Include directories
-target_include_directories(GeometryVisualizer PRIVATE
+target_include_directories(${PROJECT_NAME} PUBLIC
         include
-        .
-        /home/cristopher/git/C/raylib/src
-        /home/cristopher/git/C/raylib/src/external
-        /home/cristopher/git/C/raylib/examples/core
-        /usr/local/include
+        "${CMAKE_CURRENT_SOURCE_DIR}/3rd-party/raylib/src"
+        "${CMAKE_CURRENT_SOURCE_DIR}/3rd-party/raygui/src"
 )
 
-# Library search paths
 target_link_directories(GeometryVisualizer PRIVATE
         .
-        /home/cristopher/git/C/raylib/src
-        /usr/local/lib
+        /3rd-party/raylib/src
 )
 
-# Link libraries
-target_link_libraries(GeometryVisualizer PRIVATE
-        raylib
-        GL
-        m
-        pthread
-        dl
-        rt
-        X11
-        atomic
+target_link_libraries(${PROJECT_NAME} PUBLIC raylib)
+
+# Output directory
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY
+        ${CMAKE_BINARY_DIR}/bin/Release/GeometryVisualizer
 )
