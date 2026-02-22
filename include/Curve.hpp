@@ -1,5 +1,6 @@
 #pragma once
 
+#include <Defaults.hpp>
 #include <IDrawable.hpp>
 
 #include <array>
@@ -51,11 +52,7 @@ public:
 
     void Draw() const override
     {
-        if constexpr (N < 2)
-            return;
-
-        for (auto it = m_internalArray.begin(); it != m_internalArray.end() - 1; ++it)
-            DrawCylinderEx(*it, *(it + 1), m_thickness, m_thickness, 4, m_color);
+        DrawMesh(GetMesh(), Defaults::Get().DefaultMaterial(), Defaults::Get().DefaultMatrix());
     }
 
     // Returns a GPU-ready tube mesh swept along the curve.

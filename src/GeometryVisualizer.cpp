@@ -30,9 +30,6 @@ void GeometryVisualizer::Launch()
 {
     const auto& curves = createCurves();
 
-    const auto defaultMaterial = LoadMaterialDefault();
-    const auto matrixIdentity = MatrixIdentity();
-
     while (!WindowShouldClose())
     {
         UpdateCamera(&m_camera, m_cameraMode);
@@ -48,7 +45,7 @@ void GeometryVisualizer::Launch()
         m_gridCoordinateArrows.Draw();
 
         for (const auto& curve : curves)
-            DrawMesh(curve->GetMesh(), defaultMaterial, matrixIdentity);
+            curve->Draw();
 
         EndMode3D();
 
