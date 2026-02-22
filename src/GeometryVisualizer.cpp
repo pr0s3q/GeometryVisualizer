@@ -1,8 +1,11 @@
 #include <AppSettings.hpp>
 #include <GeometryVisualizer.hpp>
+#include <GeneratedCurves.hpp>
 #include <Toolbar.hpp>
 
 #include <raylib.h>
+
+#include "raymath.h"
 
 GeometryVisualizer::GeometryVisualizer()
 {
@@ -12,19 +15,24 @@ GeometryVisualizer::GeometryVisualizer()
 
     InitWindow(screenWidth, screenHeight, "GeometryVisualizer");
 
-    m_camera.position = (Vector3){ 0.0f, 10.0f, 10.0f };
-    m_camera.target = (Vector3){ 0.0f, 0.0f, 0.0f };
-    m_camera.up = (Vector3){ 0.0f, 1.0f, 0.0f };
+    m_camera.position = Vector3{ 0.0f, 10.0f, 10.0f };
+    m_camera.target = Vector3{ 0.0f, 0.0f, 0.0f };
+    m_camera.up = Vector3{ 0.0f, 1.0f, 0.0f };
     m_camera.fovy = 45.0f;
     m_camera.projection = CAMERA_PERSPECTIVE;
 
     DisableCursor();
 
-    SetTargetFPS(100);
+    //SetTargetFPS(100);
 }
 
 void GeometryVisualizer::Launch()
 {
+    const auto& curves = createCurves();
+
+    const auto defaultMaterial = LoadMaterialDefault();
+    const auto matrixIdentity = MatrixIdentity();
+
     while (!WindowShouldClose())
     {
         UpdateCamera(&m_camera, m_cameraMode);
@@ -39,6 +47,9 @@ void GeometryVisualizer::Launch()
 
         m_gridCoordinateArrows.Draw();
 
+        for (const auto& curve : curves)
+            DrawMesh(curve->GetMesh(), defaultMaterial, matrixIdentity);
+
         EndMode3D();
 
         m_cursor.Draw();
@@ -48,13 +59,15 @@ void GeometryVisualizer::Launch()
 
         EndDrawing();
     }
+
     CloseWindow();
 }
 
 void GeometryVisualizer::HandleKeyInput()
 {
     if (IsKeyPressed(KEY_Z))
-        m_camera.target = (Vector3){ 0.0f, 0.0f, 0.0f };
+        m_camera.target = Vector3{ 0.0f, 0.0f, 0.0f };
+
     if (IsKeyPressed(KEY_M))
     {
         if (m_cameraMode == CAMERA_CUSTOM)

@@ -4,15 +4,23 @@
 
 void GridCoordinateArrows::Draw() const
 {
+    Vector3 zero = {0.0f, 0.0f, 0.0f};
+
     // Red - X axis
-    DrawCylinderEx((Vector3){0.0f, 0.0f, 0.0f}, (Vector3){m_startPosition, 0.0f, 0.0f}, m_arrowLineThickness, m_arrowLineThickness, 16, RED);
-    DrawCylinderEx((Vector3){m_startPosition, 0.0f, 0.0f}, (Vector3){m_endPosition, 0.0f, 0.0f}, m_arrowTipThickness, 0.0f, 16, RED);
+    Vector3 startX = {m_startPosition, 0.0f, 0.0f};
+    Vector3 endX = {m_endPosition, 0.0f, 0.0f};
+    DrawCylinderEx(zero, startX, m_arrowLineThickness, m_arrowLineThickness, 16, RED);
+    DrawCylinderEx(startX, endX, m_arrowTipThickness, 0.0f, 16, RED);
 
     // Green - Y axis
-    DrawCylinderEx((Vector3){0.0f, 0.0f, 0.0f}, (Vector3){0.0f, m_startPosition, 0.0f}, m_arrowLineThickness, m_arrowLineThickness, 16, GREEN);
-    DrawCylinderEx((Vector3){0.0f, m_startPosition, 0.0f}, (Vector3){0.0f, m_endPosition, 0.0f}, m_arrowTipThickness, 0.0f, 16, GREEN);
+    Vector3 startY = {0.0f, m_startPosition, 0.0f};
+    Vector3 endY = {0.0f, m_endPosition, 0.0f};
+    DrawCylinderEx(zero, startY, m_arrowLineThickness, m_arrowLineThickness, 16, GREEN);
+    DrawCylinderEx(startY, endY, m_arrowTipThickness, 0.0f, 16, GREEN);
 
     // Blue - Z axis
-    DrawCylinderEx((Vector3){0.0f, 0.0f, 0.0f}, (Vector3){0.0f, 0.0f, m_startPosition}, m_arrowLineThickness, m_arrowLineThickness, 16, BLUE);
-    DrawCylinderEx((Vector3){0.0f, 0.0f, m_startPosition}, (Vector3){0.0f, 0.0f, m_endPosition}, m_arrowTipThickness, 0.0f, 16, BLUE);
+    Vector3 startZ = {0.0f, 0.0f, m_startPosition};
+    Vector3 endZ = {0.0f, 0.0f, m_endPosition};
+    DrawCylinderEx(zero, startZ, m_arrowLineThickness, m_arrowLineThickness, 16, BLUE);
+    DrawCylinderEx(startZ, endZ, m_arrowTipThickness, 0.0f, 16, BLUE);
 }
