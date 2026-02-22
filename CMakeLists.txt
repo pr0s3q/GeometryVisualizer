@@ -28,9 +28,9 @@ add_executable(GeometryVisualizer
 
 # Optimization & CPU flags
 target_compile_options(GeometryVisualizer PRIVATE
-#        -Wall -Wextra -Wpedantic
-#        -Wshadow -Wconversion -Wsign-conversion
-#        -Werror
+        -Wall -Wextra -Wpedantic
+        -Wshadow -Wconversion -Wsign-conversion
+        -Werror
 
         $<$<CONFIG:Release>:-O3 -march=native -mavx2>
 
@@ -43,8 +43,10 @@ target_link_options(GeometryVisualizer PRIVATE
 
 target_include_directories(${PROJECT_NAME} PRIVATE include)
 
+# Treat all 3rd-party headers as system includes to suppress their warnings
 target_include_directories(GeometryVisualizer SYSTEM PRIVATE
         "${CMAKE_CURRENT_SOURCE_DIR}/3rd-party/raygui/src"
+        $<TARGET_PROPERTY:raylib,INTERFACE_INCLUDE_DIRECTORIES>
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE raylib)

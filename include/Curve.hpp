@@ -76,22 +76,21 @@ private:
         if constexpr (N < 2)
             return Mesh{};
 
-        constexpr int sides = 8;
-
-        const int ringCount  = static_cast<int>(N);
-        const int vertCount  = ringCount * sides;
-        const int triCount   = (ringCount - 1) * sides * 2;
+        constexpr std::size_t sides     = 8;
+        constexpr std::size_t ringCount = N;
+        constexpr std::size_t vertCount = ringCount * sides;
+        constexpr std::size_t triCount  = (ringCount - 1) * sides * 2;
 
         Mesh mesh = {};
-        mesh.vertexCount  = vertCount;
-        mesh.triangleCount = triCount;
+        mesh.vertexCount   = static_cast<int>(vertCount);
+        mesh.triangleCount = static_cast<int>(triCount);
         mesh.vertices  = static_cast<float*>(MemAlloc(vertCount * 3 * sizeof(float)));
         mesh.normals   = static_cast<float*>(MemAlloc(vertCount * 3 * sizeof(float)));
         mesh.texcoords = static_cast<float*>(MemAlloc(vertCount * 2 * sizeof(float)));
         mesh.indices   = static_cast<unsigned short*>(MemAlloc(triCount * 3 * sizeof(unsigned short)));
 
         // Vertex generation
-        for (int i = 0; i < ringCount; ++i)
+        for (std::size_t i = 0; i < ringCount; ++i)
         {
             // Central-difference tangent (forward/backward at the ends)
             Vector3 tangent;
@@ -112,7 +111,7 @@ private:
             constexpr float uStep = 1.f / static_cast<float>(sides);
             const float vCoord = static_cast<float>(i) / static_cast<float>(ringCount - 1);
 
-            for (int s = 0; s < sides; ++s)
+            for (std::size_t s = 0; s < sides; ++s)
             {
                 const float angle = 2.f * PI * static_cast<float>(s) / static_cast<float>(sides);
                 const float cosA  = std::cos(angle);
@@ -126,7 +125,7 @@ private:
                     normal.z * cosA + z * sinA
                 };
 
-                const int vi = (i * sides + s) * 3;
+                const std::size_t vi = (i * sides + s) * 3;
                 mesh.vertices[vi]     = center.x + outward.x * m_thickness;
                 mesh.vertices[vi + 1] = center.y + outward.y * m_thickness;
                 mesh.vertices[vi + 2] = center.z + outward.z * m_thickness;
@@ -135,19 +134,19 @@ private:
                 mesh.normals[vi + 1] = outward.y;
                 mesh.normals[vi + 2] = outward.z;
 
-                const int ti = (i * sides + s) * 2;
+                const std::size_t ti = (i * sides + s) * 2;
                 mesh.texcoords[ti]     = static_cast<float>(s) * uStep;
                 mesh.texcoords[ti + 1] = vCoord;
             }
         }
 
         // Index generation
-        int idx = 0;
-        for (int i = 0; i < ringCount - 1; ++i)
+        std::size_t idx = 0;
+        for (std::size_t i = 0; i < ringCount - 1; ++i)
         {
-            for (int s = 0; s < sides; ++s)
+            for (std::size_t s = 0; s < sides; ++s)
             {
-                const int next = (s + 1) % sides;
+                const std::size_t next = (s + 1) % sides;
                 const auto a = static_cast<unsigned short>(i       * sides + s);
                 const auto b = static_cast<unsigned short>(i       * sides + next);
                 const auto c = static_cast<unsigned short>((i + 1) * sides + s);
